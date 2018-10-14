@@ -8,13 +8,16 @@ const request = require("request");
 const key = "qSP03GfhYotSr0yyUGAVwh1oAxiJumLz";
 
 const getGeocodeAddress = (location, callback) => {
+
+  const encodedLocation = encodeURIComponent(location);
+
   request(
     {
       url:
         "http://www.mapquestapi.com/geocoding/v1/address?key=" +
         key +
         "&location=" +
-        location,
+        encodedLocation,
       json: true
     },
     (error, response, body) => {
@@ -28,6 +31,7 @@ const getGeocodeAddress = (location, callback) => {
       // JSON.stringify(body, undefined, 2);
       else {
         callback(undefined, {
+          city: body.results[0].locations[0].adminArea5,
           latitude: body.results[0].locations[0].latLng.lat,
           longitude: body.results[0].locations[0].latLng.lng
         });

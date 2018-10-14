@@ -23,10 +23,11 @@ const getWeather = (lat, long, callback) => {
       } else if (response.statusCode !== 200) {
         callback("Unable to fetch weather");
       }
-      // to show all nested objects in JSON with 2 space of indent:
-      // JSON.stringify(body, undefined, 2);
       else {
-        callback(undefined, body.currently.temperature);
+        callback(undefined, {
+            temperature: body.currently.temperature,
+            apparentTemperature: body.currently.apparentTemperature,
+        });
       }
     }
   );
